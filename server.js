@@ -13,7 +13,8 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "701717",
-    database: 'myproject'
+    database: 'myproject',
+    multipleStatements:true
 });
 
 con.connect(function (err) {
@@ -52,6 +53,28 @@ router.get('/getstations', function (req, res) {
 
 });
 
+router.get('/getquestiondiagnosis',function(req,res){
+    con.query('SELECT * FROM diagnosis;SELECT * FROM question',function(err,rows){
+        if(err) throw err;
+        let result={
+            diagnosis:[],
+            questions:[]
+        };
+        console.log(rows[0])
+        console.log("row1")
+        console.log(rows[1])
+        for(let diagnosis of rows[0]){
+            result.diagnosis.push(diagnosis.diagnosis);
+        }
+        for(let question of rows[1]){
+            result.questions.push(question.question);
+        }
+        console.log(rows)
+        res.send(JSON.stringify(result));
+
+    });
+});
+
 router.post('/validateAdmin', function (req, res) {
     console.log(req.body);
     const name = req.body.ipadname;
@@ -74,9 +97,56 @@ router.post('/validateAdmin', function (req, res) {
 
 });
 
-router.post('/validateUser', function (req, res) {
+router.post('/checkin', function (req, res) {
     console.log(req.body);
+    let idnumber = req.body.idnumber;
+    console.log("idnumber:"+idnumber);
+    const idstation = parseInt(req.body.idstation)+1;
+    if(idnumber==''){
+        const email = req.body.email;
+        console.log("email:"+email);
+        con.query('SELECT idnumber FROM users WHERE email="'+email+'"',function(err,rows){
+            if(err) throw err;
+            console.log(rows);
+            idnumber= rows[0].idnumber;
+            con.query('INSERT INTO checkin (idstation,idnumber) VALUES ('+idstation+','+idnumber+')',function(err,row){
+                if(err) throw err;
+                res.send(JSON.stringify(1));
 
+            });
+        });
+    }else{
+        con.query('INSERT INTO checkin (idstation,idnumber) VALUES ('+idstation+','+idnumber+')',function(err,rows){
+            if(err) throw err;
+            res.send(JSON.stringify(1));
+        });
+    }
+
+
+
+});
+
+router.post('/registerUser',function(req,res){
+    console.log(req.body);
+    const firstname= req.body.firstname;
+    const lastname= req.body.lastname;
+    const email= req.body.email;
+    const phone= req.body.phone;
+    const diagnosis= parseInt(req.body.selectedDiagnosis)+1;
+    const question= parseInt(req.body.selectedQuestion)+1;
+    const answer= req.body.answer;
+    const password= req.body.password;
+    con.query('SELECT MAX(idnumber) FROM users',function(err,rows){
+        if(err) throw err;
+        console.log(rows);
+        const idnumber = rows[0]['MAX(idnumber)']+1;
+        console.log(idnumber);
+        let query='INSERT INTO users (firstname, lastname, email,phone,idquestion,answer,password,iddiagnosis,idnumber) VALUES ("'+firstname+'","'+lastname+'","'+email+'","'+phone+'",'+question+',"'+answer+'","'+password+'",'+diagnosis+','+idnumber+')';
+        con.query(query,function(err){
+            if(err) throw err;
+            res.send(JSON.stringify(idnumber));
+        });
+    });
 });
 
 

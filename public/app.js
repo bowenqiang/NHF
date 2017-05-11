@@ -16,6 +16,16 @@
                 controller:"userLoginCtrl",
                 controllerAs:"userLogin"
             })
+            .when('/register',{
+                templateUrl:'/public/app/registration/registration.html',
+                controller:'registrationCtrl',
+                controllerAs:'registration'
+            })
+            .when('/welcome',{
+                templateUrl:"/public/app/welcome/welcome.html",
+                controller:'welcomeCtrl',
+                controllerAs:'welcome'
+            })
             .otherwise({
                 template:"The page is no longer exist!"
             }
