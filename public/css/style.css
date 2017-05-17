@@ -1,4 +1,12 @@
-/*#main {
-    background-image: url(/public/imgs/background.png);
-    background-size: 1920px 1080px;
-}*/
+*{
+    padding:0;
+    margin:0;
+}
+
+.mainpanel{
+    border: black 3px solid;
+    border-radius: 10px;
+    padding: 40px 60px 20px 60px;
+    text-align: center;
+
+}

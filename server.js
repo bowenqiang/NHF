@@ -86,11 +86,12 @@ router.post('/validateAdmin', function (req, res) {
         if(err) throw err;
         console.log(rows[0]);
         if(rows.length>0){
-           // res.redirect('#/login');
             res.send(JSON.stringify(rows[0].idadmin));
+            //res.redirect('/#/login');
 
         }else{
-            res.send(JSON.stringify(0));         
+            res.send(JSON.stringify(0)); 
+            //res.redirect('/#/');  
         }
     });
 

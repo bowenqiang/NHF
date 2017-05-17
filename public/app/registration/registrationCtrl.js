@@ -22,6 +22,11 @@
             $scope.register = () =>{
                 console.log('register');
                 console.log($scope.user);
+                if($scope.user.password !==$scope.passwordconfirm)
+                {
+                    alert("password doesn't match");
+                    return;
+                }
                 $http.post('/api/registerUser',$scope.user).then(function(res){
                     data.idnumber = res.data;
                     if(data.idnumber>0){

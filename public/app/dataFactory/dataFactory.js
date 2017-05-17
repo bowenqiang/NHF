@@ -5,7 +5,7 @@
         .module('myApp')
         .factory('dataFactory', [function(){
             let factory = {
-                idstation:null
+                idstation:0
             };
 
             factory.setIdStation = (id) =>{

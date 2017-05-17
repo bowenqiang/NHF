@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-10 col-md-offset-1 mainpanel">
             <form ng-submit="register()">
                 <div class="form-group">
                     <input type="" class="form-control" id="firstname" placeholder="First Name" ng-model="user.firstname">
@@ -10,21 +10,29 @@
                     <input type="" class="form-control" id="lastname" placeholder="Last Name" ng-model="user.lastname">
                 </div>
 
-                 <div class="form-group">
+                <div class="form-group">
                     <select ng-model="user.selectedDiagnosis" ng-options="index as item for (index,item) in diagnosis">
+                        <option value="" disabled selected>Diagnosis</option>
                     </select>
                 </div>
 
-                 <div class="form-group">
-                    <input type="email" class="form-control" id="email" placeholder="Email" ng-model="user.email">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="user.email">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <input type="phone" class="form-control" id="phone" placeholder="Mobile phone number" ng-model="user.phone">
+                    </div>
+
                 </div>
 
-                <div class="form-group">
-                    <input type="phone" class="form-control" id="phone" placeholder="Mobile phone number" ng-model="user.phone">
-                </div>
+
+
 
                 <div class="form-group">
                     <select ng-model="user.selectedQuestion" ng-options="index as item for (index,item) in questions">
+                        <option value="" disabled selected>Security Question</option>
                     </select>
                 </div>
 
@@ -32,12 +40,15 @@
                     <input type="" class="form-control" id="answer" placeholder="Security Answer" ng-model="user.answer">
                 </div>
 
-                <div class="form-group">
-                    <input type="" class="form-control" id="password" placeholder="Password" ng-model="user.password">
-                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="" class="form-control" id="password" placeholder="Password" ng-model="user.password">
+                    </div>
 
-                <div class="form-group">
-                    <input type="" class="form-control" id="passwordconfirm" placeholder="Password Confirm" ng-model="passwordconfirm">
+                    <div class="col-md-6 form-group">
+                        <input type="" class="form-control" id="passwordconfirm" placeholder="Password Confirm" ng-model="passwordconfirm">
+                    </div>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary">Creat my account</button>
