@@ -1,36 +1,47 @@
-(function(){
+(function () {
     'use strict';
 
     angular
         .module('myApp')
-        .controller('userLoginCtrl', ['$scope','$location','$http','dataFactory',function($scope,$location,$http,dataFactory){
+        .controller('userLoginCtrl', ['$scope', '$location', '$http', 'dataFactory', function ($scope, $location, $http, dataFactory) {
             $scope.user = {
-                idnumber:null,
-                email:"",
-                idstation:null
+                idnumber: null,
+                email: "",
+                idstation: null
             }
-            let init = () =>{
-                $scope.user.idstation=dataFactory.getIdStation();
+            function init(){
+                $scope.user.idstation = dataFactory.getIdStation();
+                console.log('user inint');
+                console.log($scope.user.idstation);
+                console.log({ idstation: $scope.user.idstation });
+                getAttendant();
+
             };
 
             init();
-
-            
-            $scope.login =() => {
-                console.log($scope.user);
-                $http.post('/api/checkin',$scope.user).then(function(res){
-                    if(res.data>0){
-                        $location.path('/welcome')
-                    }
-                    
+            function getAttendant(){
+                $http.post('/api/getattendant', { idstation: $scope.user.idstation }).then(function (res) {
+                    $scope.attendants = res.data;
                 });
+            };
+
+
+            $scope.login = () => {
+                console.log($scope.user);
+                $http.post('/api/checkin', $scope.user).then(function (res) {
+                    if (res.data > 0) {
+                        //$location.path('/welcome')
+                    }
+
+                });
+                getAttendant();
 
             }
 
-            $scope.register = () =>{
+            $scope.register = () => {
                 $location.path('/register');
             }
-            
+
         }]);
 
 }());

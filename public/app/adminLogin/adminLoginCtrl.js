@@ -13,8 +13,12 @@
                     $scope.stations = res.data;
                 });
 
+
             };
             init();
+
+
+
             $scope.login = () => {
                 $http.post('http://127.0.0.1:8081/api/validateAdmin',$scope.user).then(function(res){
                     if(res.data!=0){

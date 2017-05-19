@@ -21,5 +21,22 @@
         </div>
 
     </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 mainpanel">
+            <table>
+                <tr>
+                    <th>ID Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+                <tr ng-repeat="attendant in attendants">
+                    <td>{{attendant.idnumber}}</td>
+                    <td>{{attendant.firstname}}</td>
+                    <td>{{attendant.lastname}}</td>
+                    </tr>
+            </table>
+        </div>
+
+    </div>
 
 </div>

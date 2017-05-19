@@ -150,6 +150,18 @@ router.post('/registerUser',function(req,res){
     });
 });
 
+router.post('/getattendant',function(req,res){
+    console.log(req.body);
+    const idstation = parseInt(req.body.idstation)+1;
+    console.log(idstation);
+    con.query('SELECT checkin.idnumber, users.lastname, users.firstname FROM checkin LEFT JOIN users ON checkin.idnumber = users.idnumber WHERE checkin.idstation='+idstation,function(err,rows){
+        if(err) throw err;
+        console.log(rows);
+        res.send(JSON.stringify(rows));
+    });
+    //res.send(req.body);
+});
+
 
 
 
