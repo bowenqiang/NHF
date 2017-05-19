@@ -11,6 +11,10 @@
             }
             function init(){
                 $scope.user.idstation = dataFactory.getIdStation();
+                if($scope.user.idstation===null){
+                    $location.path('/');
+                    return;
+                }
                 console.log('user inint');
                 console.log($scope.user.idstation);
                 console.log({ idstation: $scope.user.idstation });

@@ -1,38 +1,42 @@
-(function(){
+(function () {
     'use strict';
 
     angular
         .module('myApp')
-        .controller('registrationCtrl', ['$http','$scope','$location','dataFactory',function($http,$scope,$location,dataFactory){
+        .controller('registrationCtrl', ['$http', '$scope', '$location', 'dataFactory', function ($http, $scope, $location, dataFactory) {
             let data = {
-                idnumber:null,
-                idstation:null
+                idnumber: null,
+                idstation: null
             };
-            let init = () =>{
-                $http.get('/api/getquestiondiagnosis').then(function(res){
+            let init = () => {
+                data.idstation = dataFactory.getIdStation();
+                if (data.idstation === null) {
+                    $location.path('/');
+                    return;
+                }
+                $http.get('/api/getquestiondiagnosis').then(function (res) {
                     console.log(res.data);
                     $scope.diagnosis = res.data.diagnosis;
                     $scope.questions = res.data.questions;
                     console.log('register init')
                 });
-                data.idstation=dataFactory.getIdStation();
+                
             };
             init();
 
-            $scope.register = () =>{
+            $scope.register = () => {
                 console.log('register');
                 console.log($scope.user);
-                if($scope.user.password !==$scope.passwordconfirm)
-                {
+                if ($scope.user.password !== $scope.passwordconfirm) {
                     alert("password doesn't match");
                     return;
                 }
-                $http.post('/api/registerUser',$scope.user).then(function(res){
+                $http.post('/api/registerUser', $scope.user).then(function (res) {
                     data.idnumber = res.data;
-                    if(data.idnumber>0){
+                    if (data.idnumber > 0) {
                         //$location.path('/login');
                         console.log(data);
-                        $http.post('/api/checkin',data).then(function(res){
+                        $http.post('/api/checkin', data).then(function (res) {
                             $location.path('/welcome');
                         });
                     }
